@@ -1,43 +1,52 @@
-// Screens ni control chese function
-function showScreen(screenType) {
-    // Mundu anni screens hide cheyali
+let currentPin = "";
+
+function showScreen(screen) {
+    // Hide all screens
     document.getElementById('home-screen').style.display = 'none';
     document.getElementById('transfer-screen').style.display = 'none';
+    document.getElementById('pin-screen').style.display = 'none';
     document.getElementById('balance-screen').style.display = 'none';
 
-    // Click chesina screen ni matrame chupinchali
-    if(screenType === 'transfer') {
-        document.getElementById('transfer-screen').style.display = 'block';
-    } 
-    else if(screenType === 'balance') {
-        document.getElementById('balance-screen').style.display = 'block';
+    // Show selected
+    if(screen === 'transfer') document.getElementById('transfer-screen').style.display = 'block';
+    if(screen === 'pin') {
+        const amt = document.getElementById('payAmount').value;
+        if(amt > 0) document.getElementById('pin-screen').style.display = 'block';
+        else { alert("Enter amount first!"); goHome(); }
     }
-    else if(screenType === 'wallet') {
-        alert("PhonePe Wallet Balance: ₹0.00");
-        goHome(); // Thirigi home ki velladaniki
-    }
+    if(screen === 'balance') document.getElementById('balance-screen').style.display = 'block';
 }
 
-// Home screen ki thirigi velladaniki
 function goHome() {
-    document.getElementById('transfer-screen').style.display = 'none';
-    document.getElementById('balance-screen').style.display = 'none';
+    showScreen('home-screen');
     document.getElementById('home-screen').style.display = 'block';
+    currentPin = "";
+    updateDots();
 }
 
-// Payment trigger cheyadaniki
-function executePayment() {
-    const amt = document.getElementById('payAmount').value;
-    if(amt > 0) {
-        // Sound Play
+function pressKey(num) {
+    if (num === 'X') {
+        currentPin = currentPin.slice(0, -1);
+    } else if (currentPin.length < 4) {
+        currentPin += num;
+    }
+    updateDots();
+}
+
+function updateDots() {
+    for (let i = 1; i <= 4; i++) {
+        const dot = document.getElementById(`dot-${i}`);
+        if (i <= currentPin.length) dot.classList.add('filled');
+        else dot.classList.remove('filled');
+    }
+}
+
+function verifyPin() {
+    if (currentPin.length === 4) {
         let audio = new Audio('PhonePay.MP3');
-        audio.play().catch(e => console.log("Sound error:", e));
-        
-        // Loader ki vellu
-        setTimeout(() => { 
-            window.location.href = "loader.html"; 
-        }, 800);
+        audio.play().catch(() => {});
+        window.location.href = "loader.html";
     } else {
-        alert("Please enter a valid amount!");
+        alert("Enter 4-digit PIN");
     }
 }
