@@ -1,19 +1,17 @@
-const amount = document.getElementById("enterAmount");
-const proceed = document.getElementById("proceedToPay");
+function startPayment() {
+    const amount = document.getElementById('enterAmount').value;
+    
+    if(amount === "" || amount <= 0) {
+        alert("Please enter a valid amount");
+        return;
+    }
 
-//This will change color after the Amount input.
-amount.oninput = changeColorAfterInput;
-function changeColorAfterInput() {
-  // proceed.style.backgroundColor = "#a975e3"  //Original color
-  proceed.style.backgroundColor = "green"; //My choice Color
+    // Play PhonePe Sound (Make sure PhonePay.MP3 is in same folder)
+    let audio = new Audio('PhonePay.MP3');
+    audio.play().catch(e => console.log("Audio play failed"));
+
+    // Move to Loader
+    setTimeout(() => {
+        window.location.href = "loader.html";
+    }, 500);
 }
-
-//This is reset again the default color of Proceed Pay Button.
-amount.onbeforeinput = setProceedColorByDefault;
-function setProceedColorByDefault() {
-  proceed.style.backgroundColor = "#a975e3";
-}
-
-proceed.addEventListener("click", function () {
-  const amountValue = document.getElementById("enterAmount").value;
-});
