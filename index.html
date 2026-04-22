@@ -2,38 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhonePe Clone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PhonePe</title>
     <link rel="stylesheet" href="phonepay.css">
     <link href="https://jsdelivr.net" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <i class="ri-menu-2-line"></i>
-            <div id="pay">PhonePe</div>
-            <i class="ri-question-line"></i>
+        <!-- Official Top Header -->
+        <div class="top-nav">
+            <div class="profile-section">
+                <div class="user-p">P</div>
+                <div class="address">
+                    <span class="loc-head">Add Address <i class="ri-arrow-down-s-line"></i></span>
+                </div>
+            </div>
+            <div class="top-icons">
+                <i class="ri-qr-scan-2-line"></i>
+                <i class="ri-notification-3-line"></i>
+                <i class="ri-question-line"></i>
+            </div>
         </div>
 
-        <!-- Money Box -->
-        <div id="money-box">
-            <div id="profile"><span id="letter">P</span></div>
-            <div id="merchantName">Paying to Friend</div>
-            <div id="bankingName">Banking Name: Your Friend</div>
-            
-            <span id="rupeeSymbol">₹</span>
-            <input type="number" id="enterAmount" placeholder="Enter Amount">
-            
-            <input type="text" id="optMsg" placeholder="Add a message (Optional)">
+        <!-- Transfer Money Section -->
+        <div class="transfer-section">
+            <p class="section-title">Transfer Money</p>
+            <div class="action-grid">
+                <div class="action-item" onclick="showPayment()">
+                    <div class="icon-box purple"><i class="ri-user-shared-line"></i></div>
+                    <span>To Mobile Number</span>
+                </div>
+                <div class="action-item">
+                    <div class="icon-box purple"><i class="ri-bank-line"></i></div>
+                    <span>To Bank/ UPI ID</span>
+                </div>
+                <div class="action-item">
+                    <div class="icon-box purple"><i class="ri-restart-line"></i></div>
+                    <span>To Self Account</span>
+                </div>
+                <div class="action-item">
+                    <div class="icon-box purple"><i class="ri-bank-card-line"></i></div>
+                    <span>Check Balance</span>
+                </div>
+            </div>
         </div>
 
-        <!-- Pay Button -->
-        <div id="proceedToPay" onclick="startPayment()">
-            <div id="proceedText">PROCEED TO PAY</div>
+        <!-- Bottom Navigation Bar (Real App Feel) -->
+        <div class="bottom-nav">
+            <div class="nav-item active"><i class="ri-home-5-line"></i><span>Home</span></div>
+            <div class="nav-item"><i class="ri-shopping-bag-3-line"></i><span>Stores</span></div>
+            <div class="nav-item"><i class="ri-shield-flash-line"></i><span>Insurance</span></div>
+            <div class="nav-item"><i class="ri-funds-line"></i><span>Wealth</span></div>
+            <div class="nav-item"><i class="ri-history-line"></i><span>History</span></div>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
