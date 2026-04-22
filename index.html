@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PhonePe - IDFC First Bank</title>
+    <title>PhonePe Clone</title>
     <link rel="stylesheet" href="phonepay.css">
     <link href="https://jsdelivr.net" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <!-- 1. HOME SCREEN -->
+        <!-- HOME SCREEN -->
         <div id="home-screen">
             <div class="top-nav">
                 <div class="profile-row"><div class="user-avatar">P</div><div class="loc-text">Add Address <i class="ri-arrow-down-s-line"></i></div></div>
@@ -31,11 +31,11 @@
                 <div class="nav-btn"><i class="ri-search-line"></i><span>Search</span></div>
                 <div class="qr-btn-container"><div class="qr-main-btn"><i class="ri-qr-scan-2-line"></i></div></div>
                 <div class="nav-btn"><i class="ri-notification-3-line"></i><span>Alerts</span></div>
-                <div class="nav-btn" onclick="alert('No History')"><i class="ri-history-line"></i><span>History</span></div>
+                <div class="nav-btn"><i class="ri-history-line"></i><span>History</span></div>
             </div>
         </div>
 
-        <!-- 2. TRANSFER SCREEN (Amount Entry) -->
+        <!-- TRANSFER SCREEN -->
         <div id="transfer-screen" class="full-screen">
             <div class="sub-header"><i class="ri-arrow-left-line" onclick="goHome()"></i> <span>Send Money</span></div>
             <div class="pay-container">
@@ -47,11 +47,11 @@
             </div>
         </div>
 
-        <!-- 3. UPI PIN SCREEN -->
+        <!-- UPI PIN SCREEN -->
         <div id="pin-screen" class="full-screen" style="background: #111;">
             <div class="sub-header"><i class="ri-arrow-left-line" onclick="showScreen('transfer')"></i> <span>ENTER UPI PIN</span></div>
             <div class="upi-pin-container">
-                <p>IDFC FIRST BANK - 8899</p>
+                <p style="color: #9e9e9e; margin-bottom: 5px;">IDFC FIRST BANK - 8899</p>
                 <div class="pin-dots">
                     <div class="dot" id="dot-1"></div><div class="dot" id="dot-2"></div>
                     <div class="dot" id="dot-3"></div><div class="dot" id="dot-4"></div>
@@ -65,7 +65,7 @@
             </div>
         </div>
 
-        <!-- 4. BALANCE SCREEN -->
+        <!-- BALANCE SCREEN -->
         <div id="balance-screen" class="full-screen">
             <div class="sub-header"><i class="ri-arrow-left-line" onclick="goHome()"></i> <span>Bank Balance</span></div>
             <div class="balance-card">
