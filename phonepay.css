@@ -1,24 +1,81 @@
-:root { --pp-purple: #6739b7; --bg-dark: #000; --card-bg: #1a1a1a; }
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
-body { background: #333; display: flex; justify-content: center; }
-.container { width: 100%; max-width: 420px; height: 100vh; background: var(--bg-dark); color: white; position: relative; overflow: hidden; }
-.top-nav { padding: 15px; display: flex; justify-content: space-between; align-items: center; background: #2d164d; }
-.profile-row { display: flex; align-items: center; gap: 10px; }
-.user-avatar { width: 35px; height: 35px; background: #fb8c00; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; border: 2px solid white; }
-.top-actions { display: flex; gap: 18px; font-size: 22px; }
-.section-card { background: var(--card-bg); margin: 12px; padding: 15px; border-radius: 15px; }
-.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; }
-.grid-item { text-align: center; font-size: 10px; color: #ccc; cursor: pointer; }
-.icon-circle { width: 50px; height: 50px; border-radius: 50%; margin: 0 auto 8px; display: flex; justify-content: center; align-items: center; font-size: 24px; }
-.purple-bg { background: #4a248a; color: white; }
-.full-screen { position: absolute; top: 0; width: 100%; height: 100%; background: #000; z-index: 100; padding: 20px; }
-.sub-header { display: flex; align-items: center; gap: 15px; font-size: 18px; margin-bottom: 30px; }
-.amount-input { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 30px 0; }
-.amount-input span { font-size: 30px; }
-.amount-input input { background: transparent; border: none; border-bottom: 2px solid var(--pp-purple); color: white; font-size: 40px; width: 150px; text-align: center; outline: none; }
-.pay-btn, .done-btn { width: 100%; background: var(--pp-purple); color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; }
-.balance-card { background: var(--card-bg); padding: 30px; border-radius: 15px; text-align: center; border: 1px solid #333; }
-.bottom-nav { position: absolute; bottom: 0; width: 100%; height: 70px; background: #111; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #333; }
-.nav-btn { color: #888; display: flex; flex-direction: column; align-items: center; font-size: 10px; }
-.nav-btn.active { color: white; }
-.qr-main-btn { width: 55px; height: 55px; background: var(--pp-purple); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 28px; position: relative; top: -15px; border: 4px solid #000; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PhonePe - IDFC First Bank</title>
+    <link rel="stylesheet" href="phonepay.css">
+    <link href="https://jsdelivr.net" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- 1. HOME SCREEN -->
+        <div id="home-screen">
+            <div class="top-nav">
+                <div class="profile-row"><div class="user-avatar">P</div><div class="loc-text">Add Address <i class="ri-arrow-down-s-line"></i></div></div>
+                <div class="top-actions"><i class="ri-qr-code-line"></i><i class="ri-notification-3-line"></i><i class="ri-question-line"></i></div>
+            </div>
+            <div class="main-content">
+                <div class="section-card">
+                    <div class="section-header"><h3>Transfer Money</h3></div>
+                    <div class="grid-4">
+                        <div class="grid-item" onclick="showScreen('transfer')"><div class="icon-circle purple-bg"><i class="ri-smartphone-line"></i></div><span>To Mobile Number</span></div>
+                        <div class="grid-item" onclick="showScreen('transfer')"><div class="icon-circle purple-bg"><i class="ri-bank-line"></i></div><span>To Bank/UPI ID</span></div>
+                        <div class="grid-item" onclick="alert('Wallet Balance: ₹0.00')"><div class="icon-circle purple-bg"><i class="ri-wallet-3-line"></i></div><span>PhonePe Wallet</span></div>
+                        <div class="grid-item" onclick="showScreen('balance')"><div class="icon-circle purple-bg"><i class="ri-bank-card-line"></i></div><span>Check Balance</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-btn active"><i class="ri-home-5-line"></i><span>Home</span></div>
+                <div class="nav-btn"><i class="ri-search-line"></i><span>Search</span></div>
+                <div class="qr-btn-container"><div class="qr-main-btn"><i class="ri-qr-scan-2-line"></i></div></div>
+                <div class="nav-btn"><i class="ri-notification-3-line"></i><span>Alerts</span></div>
+                <div class="nav-btn" onclick="alert('No History')"><i class="ri-history-line"></i><span>History</span></div>
+            </div>
+        </div>
+
+        <!-- 2. TRANSFER SCREEN (Amount Entry) -->
+        <div id="transfer-screen" class="full-screen">
+            <div class="sub-header"><i class="ri-arrow-left-line" onclick="goHome()"></i> <span>Send Money</span></div>
+            <div class="pay-container">
+                <p style="color: #9e9e9e;">Enter Amount</p>
+                <div class="amount-input">
+                    <span>₹</span><input type="number" id="payAmount" placeholder="0">
+                </div>
+                <button class="pay-btn" onclick="showScreen('pin')">PROCEED TO PAY</button>
+            </div>
+        </div>
+
+        <!-- 3. UPI PIN SCREEN -->
+        <div id="pin-screen" class="full-screen" style="background: #111;">
+            <div class="sub-header"><i class="ri-arrow-left-line" onclick="showScreen('transfer')"></i> <span>ENTER UPI PIN</span></div>
+            <div class="upi-pin-container">
+                <p>IDFC FIRST BANK - 8899</p>
+                <div class="pin-dots">
+                    <div class="dot" id="dot-1"></div><div class="dot" id="dot-2"></div>
+                    <div class="dot" id="dot-3"></div><div class="dot" id="dot-4"></div>
+                </div>
+                <div class="keypad">
+                    <div class="key" onclick="pressKey(1)">1</div><div class="key" onclick="pressKey(2)">2</div><div class="key" onclick="pressKey(3)">3</div>
+                    <div class="key" onclick="pressKey(4)">4</div><div class="key" onclick="pressKey(5)">5</div><div class="key" onclick="pressKey(6)">6</div>
+                    <div class="key" onclick="pressKey(7)">7</div><div class="key" onclick="pressKey(8)">8</div><div class="key" onclick="pressKey(9)">9</div>
+                    <div class="key" onclick="pressKey('X')">⌫</div><div class="key" onclick="pressKey(0)">0</div><div class="key" style="background:#4caf50;" onclick="verifyPin()">✓</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. BALANCE SCREEN -->
+        <div id="balance-screen" class="full-screen">
+            <div class="sub-header"><i class="ri-arrow-left-line" onclick="goHome()"></i> <span>Bank Balance</span></div>
+            <div class="balance-card">
+                <img src="https://idfcfirstbank.com" class="bank-logo-img">
+                <p style="color:#9e9e9e">IDFC FIRST BANK - 8899</p>
+                <h2 class="balance-amt">₹ 5,00,00,000.00</h2>
+                <button class="done-btn" onclick="goHome()">DONE</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
