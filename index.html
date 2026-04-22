@@ -3,59 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PhonePe</title>
+    <title>PhonePe Clone</title>
     <link rel="stylesheet" href="phonepay.css">
     <link href="https://jsdelivr.net" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <!-- Official Top Header -->
+        <!-- Top Header -->
         <div class="top-nav">
-            <div class="profile-section">
-                <div class="user-p">P</div>
-                <div class="address">
-                    <span class="loc-head">Add Address <i class="ri-arrow-down-s-line"></i></span>
-                </div>
+            <div class="profile-row">
+                <div class="user-avatar">P</div>
+                <div class="loc-text">Add Address <i class="ri-arrow-down-s-line"></i></div>
             </div>
-            <div class="top-icons">
-                <i class="ri-qr-scan-2-line"></i>
+            <div class="top-actions">
+                <i class="ri-qr-code-line"></i>
                 <i class="ri-notification-3-line"></i>
                 <i class="ri-question-line"></i>
             </div>
         </div>
 
-        <!-- Transfer Money Section -->
-        <div class="transfer-section">
-            <p class="section-title">Transfer Money</p>
-            <div class="action-grid">
-                <div class="action-item" onclick="showPayment()">
-                    <div class="icon-box purple"><i class="ri-user-shared-line"></i></div>
+        <!-- Main Banner Area -->
+        <div class="main-banner">
+            <p>Send money to any UPI app</p>
+            <h2>Make your 1st payment</h2>
+            <button class="pay-now-btn">Pay Now <i class="ri-arrow-right-circle-fill"></i></button>
+            <div class="banner-icons">
+                <img src="https://icons8.com" alt="GPay">
+                <img src="https://icons8.com" alt="BHIM">
+            </div>
+        </div>
+
+        <!-- Money Transfers Section -->
+        <div class="section-card">
+            <div class="section-header">
+                <h3>Money Transfers</h3>
+                <div class="refer-badge">Refer & Earn ₹100</div>
+            </div>
+            <div class="grid-4">
+                <div class="grid-item" onclick="window.location.href='screen2.html'">
+                    <div class="icon-circle purple-bg"><i class="ri-smartphone-line"></i></div>
                     <span>To Mobile Number</span>
                 </div>
-                <div class="action-item">
-                    <div class="icon-box purple"><i class="ri-bank-line"></i></div>
-                    <span>To Bank/ UPI ID</span>
+                <div class="grid-item">
+                    <div class="icon-circle purple-bg"><i class="ri-bank-line"></i></div>
+                    <span>To Bank & Self A/c</span>
                 </div>
-                <div class="action-item">
-                    <div class="icon-box purple"><i class="ri-restart-line"></i></div>
-                    <span>To Self Account</span>
+                <div class="grid-item">
+                    <div class="icon-circle purple-bg"><i class="ri-wallet-3-line"></i></div>
+                    <span>PhonePe Wallet</span>
                 </div>
-                <div class="action-item">
-                    <div class="icon-box purple"><i class="ri-bank-card-line"></i></div>
+                <div class="grid-item">
+                    <div class="icon-circle purple-bg"><i class="ri-bank-card-line"></i></div>
                     <span>Check Balance</span>
                 </div>
             </div>
         </div>
 
-        <!-- Bottom Navigation Bar (Real App Feel) -->
+        <!-- Recharge & Bills Section -->
+        <div class="section-card">
+            <div class="section-header"><h3>Recharge & Bills</h3></div>
+            <div class="grid-4">
+                <div class="grid-item">
+                    <div class="icon-circle dark-bg"><i class="ri-smartphone-line blue-icon"></i></div>
+                    <span>Mobile Recharge</span>
+                </div>
+                <div class="grid-item">
+                    <div class="icon-circle dark-bg"><i class="ri-roadster-line green-icon"></i></div>
+                    <span>Fastag Recharge</span>
+                </div>
+                <div class="grid-item">
+                    <div class="icon-circle dark-bg"><i class="ri-lightbulb-line orange-icon"></i></div>
+                    <span>Electricity Bill</span>
+                </div>
+                <div class="grid-item">
+                    <div class="icon-circle dark-bg"><i class="ri-hand-coin-line yellow-icon"></i></div>
+                    <span>Loan Repayment</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
         <div class="bottom-nav">
-            <div class="nav-item active"><i class="ri-home-5-line"></i><span>Home</span></div>
-            <div class="nav-item"><i class="ri-shopping-bag-3-line"></i><span>Stores</span></div>
-            <div class="nav-item"><i class="ri-shield-flash-line"></i><span>Insurance</span></div>
-            <div class="nav-item"><i class="ri-funds-line"></i><span>Wealth</span></div>
-            <div class="nav-item"><i class="ri-history-line"></i><span>History</span></div>
+            <div class="nav-btn active"><i class="ri-home-5-line"></i><span>Home</span></div>
+            <div class="nav-btn"><i class="ri-search-line"></i><span>Search</span></div>
+            <div class="qr-btn-container">
+                <div class="qr-main-btn"><i class="ri-qr-scan-2-line"></i></div>
+            </div>
+            <div class="nav-btn"><i class="ri-notification-3-line"></i><span>Alerts</span></div>
+            <div class="nav-btn"><i class="ri-history-line"></i><span>History</span></div>
         </div>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
