@@ -7,26 +7,19 @@
     <link rel="stylesheet" href="phonepay.css">
     <link href="https://jsdelivr.net" rel="stylesheet">
     <style>
-        /* Specific IDFC Style & Logo */
-        .bank-logo-img {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-            background: white;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-        .balance-amt {
-            font-size: 36px;
-            color: #ffffff;
-            font-weight: bold;
-            margin: 15px 0;
-        }
-        .bank-name-text {
-            color: #9e9e9e;
-            font-size: 14px;
-            letter-spacing: 1px;
-        }
+        .bank-logo-img { width: 50px; height: 50px; object-fit: contain; background: white; border-radius: 8px; margin-bottom: 10px; }
+        .balance-amt { font-size: 36px; color: #ffffff; font-weight: bold; margin: 15px 0; }
+        .full-screen { position: absolute; top: 0; width: 100%; height: 100%; background: #000; z-index: 200; padding: 20px; display: none; }
+        
+        /* UPI PIN Page Styling */
+        .upi-pin-container { text-align: center; margin-top: 40px; }
+        .pin-dots { display: flex; justify-content: center; gap: 20px; margin: 40px 0; }
+        .dot { width: 15px; height: 15px; border-radius: 50%; border: 2px solid #6739b7; }
+        .dot.filled { background: white; border-color: white; }
+        
+        /* Keypad Styling */
+        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 50px; position: fixed; bottom: 50px; width: 90%; left: 5%; }
+        .key { font-size: 24px; color: white; padding: 20px; background: #1a1a1a; border-radius: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -34,88 +27,65 @@
         <!-- 1. MAIN HOME SCREEN -->
         <div id="home-screen">
             <div class="top-nav">
-                <div class="profile-row">
-                    <div class="user-avatar">P</div>
-                    <div class="loc-text">Add Address <i class="ri-arrow-down-s-line"></i></div>
-                </div>
-                <div class="top-actions">
-                    <i class="ri-qr-code-line"></i>
-                    <i class="ri-notification-3-line"></i>
-                    <i class="ri-question-line"></i>
-                </div>
+                <div class="profile-row"><div class="user-avatar">P</div><div class="loc-text">Add Address</div></div>
+                <div class="top-actions"><i class="ri-qr-code-line"></i><i class="ri-notification-3-line"></i><i class="ri-question-line"></i></div>
             </div>
-
             <div class="main-content">
-                <!-- Money Transfer Section -->
                 <div class="section-card">
-                    <div class="section-header"><h3>Transfer Money</h3></div>
+                    <h3>Transfer Money</h3>
                     <div class="grid-4">
-                        <div class="grid-item" onclick="showScreen('transfer')">
-                            <div class="icon-circle purple-bg"><i class="ri-smartphone-line"></i></div>
-                            <span>To Mobile Number</span>
-                        </div>
-                        <div class="grid-item" onclick="showScreen('transfer')">
-                            <div class="icon-circle purple-bg"><i class="ri-bank-line"></i></div>
-                            <span>To Bank/UPI ID</span>
-                        </div>
-                        <div class="grid-item" onclick="showScreen('wallet')">
-                            <div class="icon-circle purple-bg"><i class="ri-wallet-3-line"></i></div>
-                            <span>PhonePe Wallet</span>
-                        </div>
-                        <div class="grid-item" onclick="showScreen('balance')">
-                            <div class="icon-circle purple-bg"><i class="ri-bank-card-line"></i></div>
-                            <span>Check Balance</span>
-                        </div>
+                        <div class="grid-item" onclick="showScreen('transfer')"><div class="icon-circle purple-bg"><i class="ri-smartphone-line"></i></div><span>To Mobile</span></div>
+                        <div class="grid-item" onclick="showScreen('transfer')"><div class="icon-circle purple-bg"><i class="ri-bank-line"></i></div><span>To Bank</span></div>
+                        <div class="grid-item" onclick="showScreen('wallet')"><div class="icon-circle purple-bg"><i class="ri-wallet-3-line"></i></div><span>Wallet</span></div>
+                        <div class="grid-item" onclick="showScreen('balance')"><div class="icon-circle purple-bg"><i class="ri-bank-card-line"></i></div><span>Check Balance</span></div>
                     </div>
                 </div>
             </div>
-
-            <!-- Bottom Navigation Bar -->
-            <div class="bottom-nav">
-                <div class="nav-btn active"><i class="ri-home-5-line"></i><span>Home</span></div>
-                <div class="nav-btn"><i class="ri-search-line"></i><span>Search</span></div>
-                <div class="qr-btn-container">
-                    <div class="qr-main-btn"><i class="ri-qr-scan-2-line"></i></div>
-                </div>
-                <div class="nav-btn"><i class="ri-notification-3-line"></i><span>Alerts</span></div>
-                <div class="nav-btn"><i class="ri-history-line"></i><span>History</span></div>
-            </div>
         </div>
 
-        <!-- 2. TRANSFER SCREEN (HIDDEN) -->
-        <div id="transfer-screen" class="full-screen" style="display:none;">
-            <div class="sub-header">
-                <i class="ri-arrow-left-line" onclick="goHome()"></i> 
-                <span>Send Money</span>
-            </div>
-            <div class="pay-container" style="text-align: center; margin-top: 50px;">
+        <!-- 2. TRANSFER SCREEN -->
+        <div id="transfer-screen" class="full-screen">
+            <div class="sub-header"><i class="ri-arrow-left-line" onclick="goHome()"></i> <span>Send Money</span></div>
+            <div class="pay-container" style="text-align: center;">
                 <p style="color: #9e9e9e;">Enter Amount</p>
-                <div class="amount-input" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin: 30px 0;">
+                <div class="amount-input" style="margin: 30px 0;">
                     <span style="font-size: 30px;">₹</span>
-                    <input type="number" id="payAmount" placeholder="0" autofocus style="background: transparent; border: none; border-bottom: 2px solid #6739b7; color: white; font-size: 40px; width: 200px; text-align: center; outline: none;">
+                    <input type="number" id="payAmount" placeholder="0" style="background:transparent; border:none; border-bottom:2px solid #6739b7; color:white; font-size:40px; width:180px; text-align:center; outline:none;">
                 </div>
-                <button class="pay-btn" onclick="executePayment()" style="width: 100%; background: #6739b7; color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer;">PROCEED TO PAY</button>
+                <button class="pay-btn" onclick="showScreen('pin')" style="width:100%; background:#6739b7; color:white; padding:15px; border-radius:10px; font-weight:bold;">PROCEED TO PAY</button>
             </div>
         </div>
 
-        <!-- 3. BALANCE SCREEN (HIDDEN) -->
-        <div id="balance-screen" class="full-screen" style="display:none;">
-            <div class="sub-header">
-                <i class="ri-arrow-left-line" onclick="goHome()"></i> 
-                <span>Bank Balance</span>
+        <!-- 3. UPI PIN SCREEN -->
+        <div id="pin-screen" class="full-screen" style="background: #111;">
+            <div class="sub-header"><i class="ri-arrow-left-line" onclick="showScreen('transfer')"></i> <span>ENTER UPI PIN</span></div>
+            <div class="upi-pin-container">
+                <p>IDFC FIRST BANK - 8899</p>
+                <div class="pin-dots">
+                    <div class="dot" id="dot-1"></div>
+                    <div class="dot" id="dot-2"></div>
+                    <div class="dot" id="dot-3"></div>
+                    <div class="dot" id="dot-4"></div>
+                </div>
+                <div class="keypad">
+                    <div class="key" onclick="pressKey(1)">1</div><div class="key" onclick="pressKey(2)">2</div><div class="key" onclick="pressKey(3)">3</div>
+                    <div class="key" onclick="pressKey(4)">4</div><div class="key" onclick="pressKey(5)">5</div><div class="key" onclick="pressKey(6)">6</div>
+                    <div class="key" onclick="pressKey(7)">7</div><div class="key" onclick="pressKey(8)">8</div><div class="key" onclick="pressKey(9)">9</div>
+                    <div class="key" onclick="pressKey('X')">⌫</div><div class="key" onclick="pressKey(0)">0</div><div class="key" style="background:#4caf50;" onclick="verifyPin()">✓</div>
+                </div>
             </div>
-            <div class="balance-card" style="background: #1a1a1a; padding: 40px 20px; border-radius: 15px; text-align: center; border: 1px solid #333; margin-top: 20px;">
-                <!-- IDFC First Bank Logo Image -->
-                <img src="https://idfcfirstbank.com" alt="IDFC Logo" class="bank-logo-img">
-                <p class="bank-name-text">IDFC FIRST BANK - 8899</p>
+        </div>
+
+        <!-- 4. BALANCE SCREEN -->
+        <div id="balance-screen" class="full-screen">
+            <div class="sub-header"><i class="ri-arrow-left-line" onclick="goHome()"></i> <span>Bank Balance</span></div>
+            <div class="balance-card" style="background:#1a1a1a; padding:40px 20px; border-radius:15px; text-align:center;">
+                <img src="https://idfcfirstbank.com" class="bank-logo-img">
                 <h2 class="balance-amt">₹ 5,00,00,000.00</h2>
-                <p style="color: #4caf50; font-size: 13px;">Balance fetched successfully</p>
-                <button class="done-btn" onclick="goHome()" style="width: 100%; background: #6739b7; color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; margin-top: 40px; cursor: pointer;">DONE</button>
+                <button class="done-btn" onclick="goHome()" style="width:100%; background:#6739b7; color:white; padding:15px; border-radius:10px;">DONE</button>
             </div>
         </div>
     </div>
-
-    <!-- Script updated to match functions -->
     <script src="script.js"></script>
 </body>
 </html>
