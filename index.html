@@ -1,49 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PhonePay</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="phonepay.css" />
-    <script src="script.js" defer></script>
-    <script>
-      function passValue() {
-        const customerAmount = document.getElementById("enterAmount").value;
-        const customerName = document.getElementById("optMsg").value;
-        localStorage.setItem("textvalue", customerName);
-        localStorage.setItem("moneyAmount", customerAmount);
-        return false;
-      }
-    </script>
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhonePe Clone</title>
+    <link rel="stylesheet" href="phonepay.css">
+    <link href="https://jsdelivr.net" rel="stylesheet">
+</head>
+<body>
     <div class="container">
-      <div class="header">
-        <h2 id="pay">Pay</h2>
-      </div>
-      <div id="money-box">
-        <div id="profile"></div>
-        <h4 id="letter">S</h4>
-        <h5 id="view-history">VIEW HISTORY</h5>
-        <form action="screen3.html">
-          <input type="number" id="enterAmount" placeholder="Enter amount" />
-          <input type="text" placeholder="Add a message (optional)" id="optMsg" />
-        </form>
-      </div>
-      <h1 id="circleSymbol">S</h1>
-      <i class="ri-arrow-left-line"></i>
-      <h3 id="rupeeSymbol">₹</h3>
-      <h3 id="merchantName">Shop</h3>
-      <h3 id="bankingName">Banking name : MINA..</h3>
-      <i class="ri-question-line"></i>
-      <a href="screen3.html"
-        ><div id="proceedToPay" onclick="passValue()">
-          <h4 id="proceedText">PROCEED TO PAY</h4>
-        </div></a>
+        <!-- Header -->
+        <div class="header">
+            <i class="ri-menu-2-line"></i>
+            <div id="pay">PhonePe</div>
+            <i class="ri-question-line"></i>
+        </div>
+
+        <!-- Money Box -->
+        <div id="money-box">
+            <div id="profile"><span id="letter">P</span></div>
+            <div id="merchantName">Paying to Friend</div>
+            <div id="bankingName">Banking Name: Your Friend</div>
+            
+            <span id="rupeeSymbol">₹</span>
+            <input type="number" id="enterAmount" placeholder="Enter Amount">
+            
+            <input type="text" id="optMsg" placeholder="Add a message (Optional)">
+        </div>
+
+        <!-- Pay Button -->
+        <div id="proceedToPay" onclick="startPayment()">
+            <div id="proceedText">PROCEED TO PAY</div>
+        </div>
     </div>
-  </body>
+
+    <script src="script.js"></script>
+</body>
 </html>
