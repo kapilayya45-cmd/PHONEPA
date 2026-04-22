@@ -1,23 +1,47 @@
 let currentPin = "";
+let pinPurpose = ""; // 'payment' or 'balance'
 
 function showScreen(screen) {
+    // Hide all
     document.getElementById('home-screen').style.display = 'none';
     document.getElementById('transfer-screen').style.display = 'none';
     document.getElementById('pin-screen').style.display = 'none';
     document.getElementById('balance-screen').style.display = 'none';
 
-    if(screen === 'transfer') document.getElementById('transfer-screen').style.display = 'block';
+    if(screen === 'transfer') {
+        document.getElementById('transfer-screen').style.display = 'block';
+    } 
     else if(screen === 'pin') {
-        if(document.getElementById('payAmount').value > 0) document.getElementById('pin-screen').style.display = 'block';
-        else { alert("Enter amount!"); document.getElementById('home-screen').style.display = 'block'; }
+        document.getElementById('pin-screen').style.display = 'block';
     }
-    else if(screen === 'balance') document.getElementById('balance-screen').style.display = 'block';
-    else document.getElementById('home-screen').style.display = 'block';
+    else if(screen === 'balance-flow') {
+        pinPurpose = "balance";
+        document.getElementById('pin-label').innerText = "ENTER PIN TO CHECK BALANCE";
+        showScreen('pin');
+    }
+    else if(screen === 'balance-result') {
+        document.getElementById('balance-screen').style.display = 'block';
+    }
+    else {
+        document.getElementById('home-screen').style.display = 'block';
+    }
+}
+
+function startPaymentFlow() {
+    let amt = document.getElementById('payAmount').value;
+    if(amt > 0) {
+        pinPurpose = "payment";
+        document.getElementById('pin-label').innerText = "IDFC FIRST BANK - 8899";
+        showScreen('pin');
+    } else {
+        alert("Enter a valid amount!");
+    }
 }
 
 function goHome() {
     currentPin = "";
     updateDots();
+    document.getElementById('payAmount').value = "";
     showScreen('home');
 }
 
@@ -30,16 +54,23 @@ function pressKey(num) {
 function updateDots() {
     for (let i = 1; i <= 4; i++) {
         const dot = document.getElementById(`dot-${i}`);
-        if (dot) {
-            if (i <= currentPin.length) dot.classList.add('filled');
-            else dot.classList.remove('filled');
-        }
+        if (i <= currentPin.length) dot.classList.add('filled');
+        else dot.classList.remove('filled');
     }
 }
 
 function verifyPin() {
     if (currentPin.length === 4) {
-        new Audio('PhonePay.MP3').play().catch(() => {});
-        window.location.href = "loader.html";
-    } else alert("Enter 4-digit PIN");
+        if(pinPurpose === "payment") {
+            new Audio('PhonePay.MP3').play().catch(() => {});
+            window.location.href = "loader.html";
+        } else {
+            // Balance check flow
+            showScreen('balance-result');
+            currentPin = "";
+            updateDots();
+        }
+    } else {
+        alert("Enter 4-digit PIN");
+    }
 }
